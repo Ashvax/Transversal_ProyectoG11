@@ -54,17 +54,19 @@ public class Transversal_ProyectoG11 {
 }*/
 
         // Borrar una materia existente
-       MateriaData materiaData = new MateriaData();
-        materiaData.eliminarMateria(4);
+       /*MateriaData materiaData = new MateriaData();
+        materiaData.eliminarMateria(4);*/
 
         // Listar todas las materias
-        /*List<Materia> materia = materiaData.listarMaterias();
-        for (Materia materia : materia) {
-            System.out.println("ID: " + materia.getIdMateria());
-            System.out.println("Nombre: " + materia.getNombre());
-            System.out.println("Año: " + materia.getAnioMateria());
-            System.out.println("Activa: " + materia.isActivo());
-            System.out.println();
-        }*/
+        MateriaData materiaData = new MateriaData();
+    List<Materia> materiasActivas = materiaData.listarMaterias();
+
+    for (Materia materia : materiasActivas) {
+    System.out.println("ID: " + materia.getIdMateria());
+    System.out.println("Nombre: " + materia.getNombre());
+    System.out.println("Año: " + materia.getAnioMateria());
+    System.out.println("Estado: " + materia.isActivo());
+    System.out.println();
+   }
+        }
     }
-}
