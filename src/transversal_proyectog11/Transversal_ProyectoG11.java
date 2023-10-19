@@ -33,21 +33,29 @@ public class Transversal_ProyectoG11 {
         /*MateriaData materiaData = new MateriaData();*/
 
         // Crear una materia y guardarla
-    Materia mate = new Materia("Matemática", 2023, true);
+     /*Materia mate = new Materia("Matemática", 2023, true);
         MateriaData mat=new MateriaData();
-        mat.guardarMateria(mate);
+        mat.guardarMateria(mate);*/
         // Modificar una materia existente
-        /*Materia materiaExistente = materiaData.buscarMateria(1); // Supongamos que la materia con ID 1 existe
-        if (materiaExistente != null) {
-            materiaExistente.setNombre("Física");
-            materiaData.modificarMateria(materiaExistente);
-        }*/
+        /* MateriaData materiaData = new MateriaData();
+    Materia materia = new Materia(2, "Fisica", 2023, true);
+    
+    materiaData.modificarMateria(materia);*/
+        /*MateriaData materiaData = new MateriaData();
+    Materia materiaEncontrada = materiaData.buscarMateria(1);
+
+    if (materiaEncontrada != null) {
+        System.out.println("ID Materia: " + materiaEncontrada.getIdMateria());
+        System.out.println("Nombre: " + materiaEncontrada.getNombre());
+        System.out.println("Año: " + materiaEncontrada.getAnioMateria());
+    } else {
+        System.out.println("Materia no encontrada.");
+    }
+}*/
 
         // Borrar una materia existente
-       /*Materia materiaABorrar = materiaData.buscarMateria(2); // Supongamos que la materia con ID 2 existe
-        if (materiaABorrar != null) {
-            materiaData.eliminarMateria(materiaABorrar.getIdMateria());
-        }*/
+       MateriaData materiaData = new MateriaData();
+        materiaData.eliminarMateria(4);
 
         // Listar todas las materias
         /*List<Materia> materia = materiaData.listarMaterias();
