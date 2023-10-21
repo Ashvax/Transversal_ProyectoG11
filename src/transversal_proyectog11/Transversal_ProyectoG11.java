@@ -1,11 +1,14 @@
 package transversal_proyectog11;
+import java.net.IDN;
 import java.sql.Connection;
 import java.time.LocalDate;
 import java.util.List;
 import transversal_proyectog11.AccesoADatos.AlumnoData;
 import transversal_proyectog11.AccesoADatos.Conexion;
+import transversal_proyectog11.AccesoADatos.InscripcionData;
 import transversal_proyectog11.AccesoADatos.MateriaData;
 import transversal_proyectog11.entidades.Alumno;
+import transversal_proyectog11.entidades.Inscripcion;
 import transversal_proyectog11.entidades.Materia;
 public class Transversal_ProyectoG11 {
     public static void main(String[] args) {
@@ -68,5 +71,29 @@ public class Transversal_ProyectoG11 {
     System.out.println("Estado: " + materia.isActivo());
     System.out.println();
    }*/
+       AlumnoData ad = new AlumnoData();
+        MateriaData md = new MateriaData();
+    InscripcionData id = new InscripcionData();
+
+    Alumno Alejandro = ad.buscarAlumno(1);
+    Materia bio = md.buscarMateria(5);
+
+    Inscripcion insc = new Inscripcion(Alejandro, bio, 9);
+    //id.guardarInscripcion(insc);
+      
+      //Actualizar Nota
+      //id.actualizarNota(1, 5, 7.5);
+       //id.borrarInscripcionMateriaAlumno(1, 5);
+      
+       /*for(Inscripcion inscripcion:id.obtenerInscripciones()){
+           System.out.println("id "+inscripcion.getIdInscripcion());
+           System.out.println("Apellido "+inscripcion.getAlumno().getApellido());
+           System.out.println("Materia "+inscripcion.getMateria());
+       }*/
+       
+       for (Materia materia:id.obtenerMateriasNoCursadas(4)){
+           System.out.println("nombre "+materia.getNombre());
+       }
+       
         }
     }
