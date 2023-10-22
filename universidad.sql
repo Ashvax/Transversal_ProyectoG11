@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 21-10-2023 a las 00:17:19
+-- Tiempo de generación: 22-10-2023 a las 17:02:53
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -47,7 +47,8 @@ INSERT INTO `alumno` (`idAlumno`, `dni`, `apellido`, `nombre`, `fechaNac`, `esta
 (2, 42239916, 'Veliz', 'Ivo', '1999-12-05', 1),
 (6, 45502620, 'Rotta', 'Alejandro', '2005-02-09', 1),
 (7, 45202852, 'Cuk', 'Gonzalo', '2005-10-03', 1),
-(8, 12312312, 'Luna', 'Juan Pedro', '1980-04-25', 0);
+(8, 12312312, 'Luna', 'Juan Pedro', '1980-04-25', 0),
+(9, 43520682, 'Ferreyra', 'Antonio', '1995-08-20', 1);
 
 -- --------------------------------------------------------
 
@@ -71,7 +72,8 @@ INSERT INTO `inscripcion` (`idInscripcion`, `nota`, `idAlumno`, `idMateria`) VAL
 (2, 8, 2, 2),
 (3, 10, 6, 3),
 (4, 9, 6, 2),
-(5, 7, 7, 2);
+(5, 7, 7, 2),
+(12, 9, 9, 6);
 
 -- --------------------------------------------------------
 
@@ -95,7 +97,8 @@ INSERT INTO `materia` (`idMateria`, `nombre`, `anioMateria`, `estado`) VALUES
 (2, 'Fisica', 2023, 1),
 (3, 'Web 1', 2023, 1),
 (4, 'Laboratorio 2', 2024, 0),
-(5, 'Matemática', 2023, 1);
+(5, 'Matemática', 2023, 1),
+(6, 'Ingles', 2024, 1);
 
 --
 -- Índices para tablas volcadas
@@ -130,19 +133,19 @@ ALTER TABLE `materia`
 -- AUTO_INCREMENT de la tabla `alumno`
 --
 ALTER TABLE `alumno`
-  MODIFY `idAlumno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `idAlumno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `inscripcion`
 --
 ALTER TABLE `inscripcion`
-  MODIFY `idInscripcion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `idInscripcion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de la tabla `materia`
 --
 ALTER TABLE `materia`
-  MODIFY `idMateria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `idMateria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Restricciones para tablas volcadas
