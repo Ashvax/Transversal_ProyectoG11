@@ -13,16 +13,16 @@ import transversal_proyectog11.entidades.Materia;
 public class Transversal_ProyectoG11 {
     public static void main(String[] args) {
        
-        /*
-        //Alumno juan=new Alumno(8,12312312,"Luna","Juan Pedro",LocalDate.of(1980, 4, 25),true);
-    AlumnoData alu=new AlumnoData();
-    //alu.guardarAlumno(juan);
+        
+        /*Alumno juan=new Alumno(43520682,"Ferreyra","Antonio",LocalDate.of(1995, 8, 20),true); 
+    AlumnoData alu=new AlumnoData(); 
+    alu.guardarAlumno(juan);*/
     //alu.modificarAlumno(juan);
     //alu.borrarAlumno(8);
-    Alumno alumnoEncontrado=alu.buscarAlumnoPorDni(1234);
+    /*Alumno alumnoEncontrado=alu.buscarAlumnoPorDni(1234);
         if(alumnoEncontrado!=null){
         System.out.println("dni"+alumnoEncontrado.getDni());
-        System.out.println("apellido"+alumnoEncontrado.getApellido());   */ 
+        System.out.println("apellido"+alumnoEncontrado.getApellido());*/ 
         
        /* AlumnoData alu=new AlumnoData();
         for(Alumno alumno:alu.listarAlumnos()){
@@ -36,9 +36,9 @@ public class Transversal_ProyectoG11 {
         /*MateriaData materiaData = new MateriaData();*/
 
         // Crear una materia y guardarla
-     /*Materia mate = new Materia("Matemática", 2023, true);
+       /* Materia mate = new Materia("Ingles", 2024, true);
         MateriaData mat=new MateriaData();
-        mat.guardarMateria(mate);*/
+        mat.guardarMateria(mate); */
         // Modificar una materia existente
         /* MateriaData materiaData = new MateriaData();
     Materia materia = new Materia(2, "Fisica", 2023, true);
@@ -75,8 +75,8 @@ public class Transversal_ProyectoG11 {
         MateriaData md = new MateriaData();
     InscripcionData id = new InscripcionData();
 
-    Alumno Alejandro = ad.buscarAlumno(1);
-    Materia bio = md.buscarMateria(5);
+    Alumno Alejandro = ad.buscarAlumno(9);
+    Materia bio = md.buscarMateria(6);
 
     Inscripcion insc = new Inscripcion(Alejandro, bio, 9);
     //id.guardarInscripcion(insc);
@@ -91,9 +91,9 @@ public class Transversal_ProyectoG11 {
            System.out.println("Materia "+inscripcion.getMateria());
        }*/
        
-       for (Materia materia:id.obtenerMateriasNoCursadas(4)){
+      /*for (Materia materia:id.obtenerMateriasNoCursadas(4)){
            System.out.println("nombre "+materia.getNombre());
-       }
+       }*/
        
         }
     }
