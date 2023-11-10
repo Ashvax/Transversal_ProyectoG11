@@ -100,21 +100,20 @@ public class InscripcionData {
     
     public List<Inscripcion> obtenerInscripciones() {
         ArrayList<Inscripcion> cursadas = new ArrayList<>();
-        String sql = "SELECT * FROM inscripcion";
-        try {
-            PreparedStatement ps = con.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                Inscripcion insc=new Inscripcion();
-                insc.setIdInscripcion(rs.getInt("idInscripcion"));
-                Alumno alu=ad.buscarAlumno(rs.getInt("idAlumno"));
-                Materia mat=md.buscarMateria(rs.getInt("idMateria"));
-                insc.setAlumno(alu);
-                insc.setMateria(mat);
-                insc.setNota(rs.getDouble("nota"));
-                cursadas.add(insc);
-                
-            }
+        String sql=  " SELECT * FROM inscripcion ";
+          try {
+         PreparedStatement ps= con.prepareStatement(sql);
+         ResultSet rs=ps.executeQuery();
+         while(rs.next()){
+             Inscripcion ins= new Inscripcion();
+             ins.setIdInscripcion(rs.getInt("idInscripcion")) ;
+             Alumno alu= ad.buscarAlumno(rs.getInt("idAlumno"));
+             Materia mat= md.buscarMateria(rs.getInt("idMateria"));
+             ins.setAlumno(alu);
+             ins.setMateria(mat);
+             ins.setNota(rs.getDouble("nota"));
+             cursadas.add(ins);
+         }
             ps.close();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Inscripcion");

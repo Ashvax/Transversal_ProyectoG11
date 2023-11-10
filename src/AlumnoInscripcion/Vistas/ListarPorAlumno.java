@@ -5,6 +5,7 @@ import AlumnoInscripcion.AccesoADatos.*;
 import AlumnoInscripcion.entidades.*;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
 public class ListarPorAlumno extends javax.swing.JInternalFrame {
@@ -15,9 +16,17 @@ public class ListarPorAlumno extends javax.swing.JInternalFrame {
     private ArrayList<Materia> listarMaterias;   
     
         
-        private MateriaData mateData;
-        private InscripcionData inscData;
-        private DefaultTableModel modelo;
+        private ArrayList<Materia> listmat; 
+    private ArrayList<Alumno> listalum; 
+    private ArrayList<Inscripcion>listainsc;
+
+    private AlumnoData alumData;
+    private MateriaData matData;
+    private InscripcionData inscData;
+
+
+    private DefaultTableModel modelo;
+    
         
         
 
@@ -25,26 +34,73 @@ public class ListarPorAlumno extends javax.swing.JInternalFrame {
         initComponents();
         
         
-        inscData = new InscripcionData();
-        InscripcionData inscData = new InscripcionData(); 
-        mateData = new MateriaData();
-        
-        listarMaterias = (ArrayList<Materia>) mateData.listarMaterias();
-       
-        
-        cargarCombo();
-        
-        JCBMaterias.setSelectedItem(-1);
-        modelo = new DefaultTableModel(){
-            
-            public boolean IsCellEditable(int f, int c){
-                return false;
-            }
-        };
+              this.setTitle("Consulta Alumnos por Materia");
+        alumData= new AlumnoData(); // inicializo 
+        listalum= (ArrayList<Alumno>)alumData.listarAlumnos();
+        modelo = new DefaultTableModel();
+        matData = new MateriaData(); // inicializo
+        listmat = (ArrayList<Materia>) matData.listarMaterias(); 
+        inscData = new InscripcionData(); // Inicializa inscData
+        listainsc = (ArrayList<Inscripcion>) inscData.obtenerAlumnosXMateria();
         armarCabecera();
-           
+        cargarMateria();
+    }
+    
+       private void cargarMateria() {
+        for (Materia materia : listmat) {
+            JCBMaterias.addItem(materia);
         }
-   
+}
+
+    private void armarCabecera() {
+        ArrayList<Object> filaCabecera = new ArrayList<>();
+        filaCabecera.add("id");
+        filaCabecera.add("dni");
+        filaCabecera.add("apellido");
+        filaCabecera.add("nombre");
+        for (Object it : filaCabecera) {
+            modelo.addColumn(it);
+        }
+       jTable1.setModel(modelo);
+}
+     private void borrarFilaTabla() { // esta bien
+        int indice = modelo.getRowCount() - 1;
+        for (int i = indice; i >= 0; i--) { // hacemos una interaccion y removiendo 
+            modelo.removeRow(i);
+        }
+    }
+
+     private void cargarAlumnosPorMateria() {
+    borrarFilaTabla();
+    Materia selectedMateria = (Materia) JCBMaterias.getSelectedItem();
+    
+    if (selectedMateria != null) {
+        int idMateria = selectedMateria.getIdMateria();
+        ArrayList<Alumno> alumnos = new ArrayList<>();
+        
+        for (Alumno alumno : listalum) {
+            int idAlumno = alumno.getIdAlumno();
+            boolean alumnoInscrito = false;
+            
+           
+            for (Inscripcion inscripcion : listainsc) {
+                if (inscripcion.getAlumno().getIdAlumno()== idAlumno && inscripcion.getMateria().getIdMateria() == idMateria) {
+                    alumnoInscrito = true;
+                    break;
+                }
+            }
+            
+            if (alumnoInscrito) {
+                alumnos.add(alumno);
+            }
+        }
+        
+        for (Alumno alumno : alumnos) {
+            modelo.addRow(new Object[]{alumno.getIdAlumno(), alumno.getDni(), alumno.getApellido(), alumno.getNombre()});
+        }
+    }
+}
+     
     
   
   
@@ -99,6 +155,11 @@ public class ListarPorAlumno extends javax.swing.JInternalFrame {
         }
 
         JCBMaterias.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        JCBMaterias.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                JCBMateriasItemStateChanged(evt);
+            }
+        });
         JCBMaterias.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 JCBMateriasActionPerformed(evt);
@@ -173,42 +234,12 @@ public class ListarPorAlumno extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_JBSalirActionPerformed
 
     private void JCBMateriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JCBMateriasActionPerformed
-     try {
-         borrarFilas();
-       Materia materiaSeleccionada = (Materia) JCBMaterias.getSelectedItem();
-         ArrayList<Alumno> alumnos = (ArrayList<Alumno>) inscData.obtenerAlumnosXMateria(materiaSeleccionada.getIdMateria());
-     for (Alumno alumno : alumnos){
-         modelo.addRow(new Object [] {alumno.getIdAlumno(), alumno.getDni(), alumno.getApellido(), alumno.getNombre()});
-     }
-     } catch (NullPointerException ex) {
-         
-     }
-     
-        
+  
     }//GEN-LAST:event_JCBMateriasActionPerformed
-    
-    private void cargarCombo(){
-        for (Materia materia : listarMaterias){
-            JCBMaterias.addItem(materia.getAsignatura());
-        }
-    }
-    
-    private void armarCabecera(){
-        modelo.addColumn("ID");
-        modelo.addColumn("DNI");
-        modelo.addColumn("Apellido");
-        modelo.addColumn("Nombre");
-        
-        
-        jTable1.setModel(modelo);
-    }
 
-      private void borrarFilas(){
-          DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
-          modelo.setRowCount(0);
-      }
-    
-    
+    private void JCBMateriasItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_JCBMateriasItemStateChanged
+
+    }//GEN-LAST:event_JCBMateriasItemStateChanged
     
     
     
