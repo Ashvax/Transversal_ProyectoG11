@@ -100,7 +100,7 @@ public class MateriaData {
     }
 
     public ArrayList<Materia> listarMaterias() {
-        String sql = "SELECT idMateria, Asignatura, Anio FROM materia WHERE estado = true";
+        String sql = "SELECT * FROM materia WHERE estado = true";
         ArrayList<Materia> materias = new ArrayList<>();
         try {
             PreparedStatement ps = con.prepareStatement(sql);

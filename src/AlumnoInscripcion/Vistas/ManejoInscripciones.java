@@ -47,7 +47,7 @@ public class ManejoInscripciones extends javax.swing.JInternalFrame {
 
         jPanel1 = new javax.swing.JPanel();
         JLSeleccion = new javax.swing.JLabel();
-        cboxAlumno = new javax.swing.JComboBox<>();
+        cboxAlumno = new javax.swing.JComboBox();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         JTMaterias = new javax.swing.JTable();
@@ -193,8 +193,14 @@ public class ManejoInscripciones extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cboxAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboxAlumnoActionPerformed
-        
-      // TODO add your handling code here:
+        if(JRBInscriptas.isSelected()){
+            borrarFilaTabla();
+            cargaDatosInscriptas();
+        }else if(JRBNoInscriptas.isSelected()){
+            borrarFilaTabla();
+            cargaDatosNoInscriptos();
+        }
+      
     }//GEN-LAST:event_cboxAlumnoActionPerformed
 
     private void JRBInscriptasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JRBInscriptasActionPerformed
@@ -253,7 +259,7 @@ public class ManejoInscripciones extends javax.swing.JInternalFrame {
     
     private void cargaAlumnos(){
         for(Alumno item: listaA){
-            cboxAlumno.addItem(item);
+            cboxAlumno.addItem(item.getIdAlumno()+"- "+item.getApellido()+" "+item.getNombre());
         }
     }
     
@@ -276,17 +282,23 @@ public class ManejoInscripciones extends javax.swing.JInternalFrame {
     }
     
     private void cargaDatosNoInscriptos(){
+        String selected= cboxAlumno.getSelectedItem().toString();
+        String [] part = selected.split("-");
+        int idAlumno = Integer.parseInt(part[0]);
         
-      Alumno selec =(Alumno)cboxAlumno.getSelectedItem(); 
-        listaM = inscData.obtenerMateriasNoCursadas(selec.getIdAlumno()); 
+      
+        listaM = inscData.obtenerMateriasNoCursadas(idAlumno); 
         for(Materia m: listaM){
             modelo.addRow(new Object[]{m.getIdMateria(), m.getAnio(), m.getAsignatura()});
         }
     }
     
     private void cargaDatosInscriptas(){
-    Alumno selec = (Alumno)cboxAlumno.getSelectedItem(); 
-        List<Materia> lista= inscData.obtenerMateriasCursadas(selec.getIdAlumno()); 
+    
+        String selected= cboxAlumno.getSelectedItem().toString();
+        String [] part = selected.split("-");
+        int idAlumno = Integer.parseInt(part[0]);
+        List<Materia> lista= inscData.obtenerMateriasCursadas(idAlumno          ); 
         for(Materia m: lista){
             modelo.addRow(new Object[]{m.getIdMateria(), m.getAsignatura(), m.getAnio()});
         }
@@ -302,7 +314,7 @@ public class ManejoInscripciones extends javax.swing.JInternalFrame {
     private javax.swing.JRadioButton JRBInscriptas;
     private javax.swing.JRadioButton JRBNoInscriptas;
     private javax.swing.JTable JTMaterias;
-    private javax.swing.JComboBox<Alumno> cboxAlumno;
+    private javax.swing.JComboBox cboxAlumno;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;

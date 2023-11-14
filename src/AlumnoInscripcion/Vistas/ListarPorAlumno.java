@@ -6,6 +6,7 @@ import AlumnoInscripcion.entidades.*;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class ListarPorAlumno extends javax.swing.JInternalFrame {
@@ -20,9 +21,9 @@ public class ListarPorAlumno extends javax.swing.JInternalFrame {
     private ArrayList<Alumno> listalum; 
     private ArrayList<Inscripcion>listainsc;
 
-    private AlumnoData alumData;
-    private MateriaData matData;
-    private InscripcionData inscData;
+    private AlumnoData alumData = new AlumnoData();
+    private MateriaData matData = new MateriaData();
+    private InscripcionData inscData= new InscripcionData();
 
 
     private DefaultTableModel modelo;
@@ -34,51 +35,61 @@ public class ListarPorAlumno extends javax.swing.JInternalFrame {
         initComponents();
         
         
-              this.setTitle("Consulta Alumnos por Materia");
-        alumData= new AlumnoData(); // inicializo 
-        listalum= (ArrayList<Alumno>)alumData.listarAlumnos();
-        modelo = new DefaultTableModel();
-        matData = new MateriaData(); // inicializo
+         this.setTitle("Consulta Alumnos por Materia");
+        /*alumData= new AlumnoData(); // inicializo 
+        */listalum= (ArrayList<Alumno>)alumData.listarAlumnos();
+        /*modelo = new DefaultTableModel();
+        matData = new MateriaData(); // inicializo*/
         listmat = (ArrayList<Materia>) matData.listarMaterias(); 
-        inscData = new InscripcionData(); // Inicializa inscData
-        listainsc = (ArrayList<Inscripcion>) inscData.obtenerAlumnosXMateria();
-        armarCabecera();
         cargarMateria();
+        /*inscData = new InscripcionData(); // Inicializa inscData
+        
+        /*armarCabecera();
+        cargarMateria();*/
     }
     
        private void cargarMateria() {
-        for (Materia materia : listmat) {
-            JCBMaterias.addItem(materia);
+        for (Materia m : listmat) {
+            JCBMaterias.addItem(m.getIdMateria()+"- "+m.getAsignatura());
         }
 }
 
     private void armarCabecera() {
-        ArrayList<Object> filaCabecera = new ArrayList<>();
+        /*ArrayList<Object> filaCabecera = new ArrayList<>();
         filaCabecera.add("id");
         filaCabecera.add("dni");
         filaCabecera.add("apellido");
         filaCabecera.add("nombre");
-        for (Object it : filaCabecera) {
+        filaCabecera.forEach((it) -> {
             modelo.addColumn(it);
-        }
+        });*/
+        String [] columns = {"id","dni","Apellido","Nombre"};
+        modelo = new DefaultTableModel(columns, 0);        
        jTable1.setModel(modelo);
 }
      private void borrarFilaTabla() { // esta bien
-        int indice = modelo.getRowCount() - 1;
-        for (int i = indice; i >= 0; i--) { // hacemos una interaccion y removiendo 
-            modelo.removeRow(i);
+        try{
+            int indice = modelo.getRowCount() - 1;
+            
+            for (int i = indice; i >= 0; i--) { // hacemos una interaccion y removiendo 
+               modelo.removeRow(i);
+            }
+        }catch(NullPointerException e){
+            System.out.println("NO seas gil!");
         }
     }
 
      private void cargarAlumnosPorMateria() {
-    borrarFilaTabla();
-    Materia selectedMateria = (Materia) JCBMaterias.getSelectedItem();
+        //borrarFilaTabla();
+        String materiaSelected = JCBMaterias.getSelectedItem().toString();
+        String [] parts= materiaSelected.split("-");
+        int idMateria= Integer.parseInt(parts[0]);
     
-    if (selectedMateria != null) {
-        int idMateria = selectedMateria.getIdMateria();
-        ArrayList<Alumno> alumnos = new ArrayList<>();
+    
         
-        for (Alumno alumno : listalum) {
+        ArrayList<Alumno> alumnos =(ArrayList<Alumno>) inscData.obtenerAlumnosXMateria(idMateria);
+        
+       /* for (Alumno alumno : listalum) {
             int idAlumno = alumno.getIdAlumno();
             boolean alumnoInscrito = false;
             
@@ -93,12 +104,12 @@ public class ListarPorAlumno extends javax.swing.JInternalFrame {
             if (alumnoInscrito) {
                 alumnos.add(alumno);
             }
-        }
-        
-        for (Alumno alumno : alumnos) {
+        }*/
+        armarCabecera();
+        for(Alumno alumno : alumnos) {
             modelo.addRow(new Object[]{alumno.getIdAlumno(), alumno.getDni(), alumno.getApellido(), alumno.getNombre()});
         }
-    }
+    
 }
      
     
@@ -154,12 +165,6 @@ public class ListarPorAlumno extends javax.swing.JInternalFrame {
             jTable1.getColumnModel().getColumn(3).setResizable(false);
         }
 
-        JCBMaterias.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        JCBMaterias.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                JCBMateriasItemStateChanged(evt);
-            }
-        });
         JCBMaterias.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 JCBMateriasActionPerformed(evt);
@@ -234,12 +239,10 @@ public class ListarPorAlumno extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_JBSalirActionPerformed
 
     private void JCBMateriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JCBMateriasActionPerformed
-  
+        // TODO add your handling code here:
+        cargarAlumnosPorMateria();
+        
     }//GEN-LAST:event_JCBMateriasActionPerformed
-
-    private void JCBMateriasItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_JCBMateriasItemStateChanged
-
-    }//GEN-LAST:event_JCBMateriasItemStateChanged
     
     
     
