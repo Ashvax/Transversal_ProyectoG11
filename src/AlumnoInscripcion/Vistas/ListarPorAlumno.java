@@ -36,16 +36,12 @@ public class ListarPorAlumno extends javax.swing.JInternalFrame {
         
         
          this.setTitle("Consulta Alumnos por Materia");
-        /*alumData= new AlumnoData(); // inicializo 
-        */listalum= (ArrayList<Alumno>)alumData.listarAlumnos();
-        /*modelo = new DefaultTableModel();
-        matData = new MateriaData(); // inicializo*/
+        
+        listalum= (ArrayList<Alumno>)alumData.listarAlumnos();
+       
         listmat = (ArrayList<Materia>) matData.listarMaterias(); 
         cargarMateria();
-        /*inscData = new InscripcionData(); // Inicializa inscData
         
-        /*armarCabecera();
-        cargarMateria();*/
     }
     
        private void cargarMateria() {
@@ -55,23 +51,16 @@ public class ListarPorAlumno extends javax.swing.JInternalFrame {
 }
 
     private void armarCabecera() {
-        /*ArrayList<Object> filaCabecera = new ArrayList<>();
-        filaCabecera.add("id");
-        filaCabecera.add("dni");
-        filaCabecera.add("apellido");
-        filaCabecera.add("nombre");
-        filaCabecera.forEach((it) -> {
-            modelo.addColumn(it);
-        });*/
+       
         String [] columns = {"id","dni","Apellido","Nombre"};
         modelo = new DefaultTableModel(columns, 0);        
        jTable1.setModel(modelo);
 }
-     private void borrarFilaTabla() { // esta bien
+     private void borrarFilaTabla() { 
         try{
             int indice = modelo.getRowCount() - 1;
             
-            for (int i = indice; i >= 0; i--) { // hacemos una interaccion y removiendo 
+            for (int i = indice; i >= 0; i--) { 
                modelo.removeRow(i);
             }
         }catch(NullPointerException e){
@@ -80,7 +69,7 @@ public class ListarPorAlumno extends javax.swing.JInternalFrame {
     }
 
      private void cargarAlumnosPorMateria() {
-        //borrarFilaTabla();
+        
         String materiaSelected = JCBMaterias.getSelectedItem().toString();
         String [] parts= materiaSelected.split("-");
         int idMateria= Integer.parseInt(parts[0]);
@@ -89,22 +78,7 @@ public class ListarPorAlumno extends javax.swing.JInternalFrame {
         
         ArrayList<Alumno> alumnos =(ArrayList<Alumno>) inscData.obtenerAlumnosXMateria(idMateria);
         
-       /* for (Alumno alumno : listalum) {
-            int idAlumno = alumno.getIdAlumno();
-            boolean alumnoInscrito = false;
-            
-           
-            for (Inscripcion inscripcion : listainsc) {
-                if (inscripcion.getAlumno().getIdAlumno()== idAlumno && inscripcion.getMateria().getIdMateria() == idMateria) {
-                    alumnoInscrito = true;
-                    break;
-                }
-            }
-            
-            if (alumnoInscrito) {
-                alumnos.add(alumno);
-            }
-        }*/
+       
         armarCabecera();
         for(Alumno alumno : alumnos) {
             modelo.addRow(new Object[]{alumno.getIdAlumno(), alumno.getDni(), alumno.getApellido(), alumno.getNombre()});
@@ -239,7 +213,7 @@ public class ListarPorAlumno extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_JBSalirActionPerformed
 
     private void JCBMateriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JCBMateriasActionPerformed
-        // TODO add your handling code here:
+        
         cargarAlumnosPorMateria();
         
     }//GEN-LAST:event_JCBMateriasActionPerformed

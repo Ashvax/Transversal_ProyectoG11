@@ -223,8 +223,9 @@ public class ManipulacionNotas extends javax.swing.JInternalFrame {
         JOptionPane.showMessageDialog(this, "Debes seleccionar una materia para actualizar la nota.");
     }
 
+    
 
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_JBGuardarActionPerformed
 
      private void borraFila(){
